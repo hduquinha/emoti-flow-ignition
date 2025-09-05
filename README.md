@@ -71,3 +71,36 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Local Mercado Pago checkout (example)
+
+This project includes a minimal example server that creates a Mercado Pago preference for local testing.
+
+Files added:
+
+- `src/pages/Checkout.tsx` — frontend page that calls `/api/create_preference` and redirects to Mercado Pago.
+- `src/pages/CheckoutSuccess.tsx` — simple success page.
+- `server/mercadopago-server.js` — example Express server that creates a preference using your Mercado Pago access token.
+
+Quick run (PowerShell):
+
+```powershell
+# 1) Install frontend deps
+npm install
+
+# 2) Install server deps (in the repo root)
+npm install express node-fetch dotenv --save
+
+# 3) Create .env with your Mercado Pago token
+echo "MP_ACCESS_TOKEN=YOUR_MP_ACCESS_TOKEN" > .env
+
+# 4) Run the example server
+node server/mercadopago-server.js
+
+# 5) In another terminal, run the frontend dev server
+npm run dev
+
+# 6) Open http://localhost:5173 and use the pricing buttons; they will navigate to /checkout
+```
+
+Security: never commit your real MP access token. In production, create the preference server-side and verify webhooks.
